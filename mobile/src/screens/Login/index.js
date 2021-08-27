@@ -1,28 +1,43 @@
 import React from "react";
 
+//@assets
 import logo from "../../assets/logo.png";
 
-//@Styles
+//@components
+import ModalLogin, {
+  ModalRef as ModalLoginRef,
+} from "../../components/Modal/Login";
+
+//@styles
 import { Box, Button, Cover, Spacer, Text } from "../../components/";
 
 const Login = () => {
   return (
-    <Box background="dark" hasPadding align="center" justify="center">
-      <Cover source={logo} width="65%" height="65%" />
+    <>
+      <ModalLogin />
 
-      <Spacer size="40px" />
+      <Box background="dark" hasPadding align="center" justify="center">
+        <Cover source={logo} width="65%" height="65%" />
 
-      <Button block> Entrar na minha conta</Button>
-      <Spacer />
-      <Button block mode="text">
-        {" "}
-        Pedir convite
-      </Button>
+        <Spacer size="40px" />
 
-      <Text small hasPadding align="center" >
-        Ao fazer login você concorda com {'\n'} nossos <Text underline small color="primary">TERMOS & CONDIÇÕES</Text>
-      </Text>
-    </Box>
+        <Button block onPress={() => ModalLoginRef.current?.open()}>
+          Entrar na minha conta
+        </Button>
+        <Spacer />
+        <Button block mode="text">
+          {" "}
+          Pedir convite
+        </Button>
+
+        <Text small hasPadding align="center">
+          Ao fazer login você concorda com {"\n"} nossos{" "}
+          <Text underline small color="primary">
+            TERMOS & CONDIÇÕES
+          </Text>
+        </Text>
+      </Box>
+    </>
   );
 };
 
