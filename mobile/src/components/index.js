@@ -128,7 +128,7 @@ export const Button = styled(ButtonPaper).attrs((props) => ({
     letterSpacing: 0,
     fontFamily: "Ubuntu_400Regular",
   },
-  mode: "contained",
+  mode: props.mode || 'contained',
 }))``;
 
 export const TextInput = styled(TextInputPaper).attrs(({ theme }) => ({
