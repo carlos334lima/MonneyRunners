@@ -148,6 +148,7 @@ export const TextInput = styled(TextInputPaper).attrs(({ theme }) => ({
   height: 45px;
   width: 100%;
   font-size: 15px;
+  
 `;
 
 /* export const ProgressCircle = styled(ProgressCircleSVG).attrs((props) => ({
