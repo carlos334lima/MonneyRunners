@@ -3,6 +3,9 @@ import React, { createRef } from "react";
 //@libraries
 import { Modalize } from "react-native-modalize";
 
+//@components
+import TextInputMaskComponent from '../../TextInputMask'
+
 //@styles
 import { Box, Title, Spacer, Button, TextInput } from "../../index";
 
@@ -21,16 +24,33 @@ const ModalInvite = () => {
         <TextInput label="E-mail" placeholder="Digite seu e-mail" />
 
         <Spacer />
-        <TextInput
+        <TextInputMaskComponent
           label="Data de nascimento"
           placeholder="Digite sua data de nascimento"
+          type={'datetime'}
+          options={{
+            format: 'DD/MM/YYYY'
+          }}
         />
 
         <Spacer />
-        <TextInput label="Telefone" placeholder="Digite seu telefone" />
+        <TextInputMaskComponent 
+          label="Telefone" 
+          placeholder="(XX) X XXXX-XXXX" 
+          type={'cel-phone'}
+          options={{
+            maskType: 'BRL',
+            withDDD: true,
+            dddMask: '(99) '
+          }}
+       />
 
         <Spacer />
-        <TextInput label="CPF" placeholder="Digite seu CPF" />
+        <TextInputMaskComponent 
+          label="CPF" 
+          placeholder="XXX.XXX.XX.XX" 
+          type={'cpf'}
+        />
 
         <Spacer />
         <TextInput
