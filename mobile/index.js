@@ -18,8 +18,7 @@ import {
 import { ThemeProvider } from 'styled-components/native';
 import { Provider as PaperProvider } from 'react-native-paper';
 
-import Tour from './src/screens/Tour';
-import Login from './src/screens/Login';
+import Home from './src/screens/Home';
 
 //import store from './src/store';
 import { colors } from './src/assets/theme.json';
@@ -45,7 +44,7 @@ const App = () => {
    
       <ThemeProvider theme={colors}>
         <PaperProvider>
-          <Login />
+          <Home />
         </PaperProvider>
       </ThemeProvider>
    
