@@ -1,5 +1,7 @@
 import styled from "styled-components/native";
 
+import { FlatList } from 'react-native'
+
 import {
   Text as TextPaper,
   Title as TitlePaper,
@@ -12,7 +14,7 @@ import {
 
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { LinearGradient } from "expo-linear-gradient";
-// import { ProgressCircle as ProgressCircleSVG } from 'react-native-svg-charts';
+import { ProgressCircle as ProgressCircleSVG } from 'react-native-svg-charts';
 
 import { ScrollView as ScrollViewComponent } from "react-native-gesture-handler";
 
@@ -25,16 +27,19 @@ export const ScrollView = styled(ScrollViewComponent)`
 `;
 
 export const Spacer = styled.View`
-  width: 100%;
+  width: ${(props) => props.size || "100%"}
   height: ${(props) => props.size || "10px"};
 `;
 
 export const Cover = styled.ImageBackground.attrs((props) =>({
   resizeMode: props.mode || 'contain'
 }))`
-  width: ${(props) => props.width || "100px"};
-  height: ${(props) => props.height || "100px"};
-  margin: ${(props) => props.spacing || "0px"};
+  width: ${(props) => props.width || '100px'};
+  height: ${(props) => props.height || '100px'};
+  margin: ${(props) => props.spacing || '0px'};
+  border-radius: ${(props) => props.rounded || 0 };
+  border: ${(props) => props.border || 'none'};
+  overflow: hidden;
 `;
 
 export const Box = styled.View`
@@ -151,14 +156,14 @@ export const TextInput = styled(TextInputPaper).attrs(({ theme }) => ({
   
 `;
 
-/* export const ProgressCircle = styled(ProgressCircleSVG).attrs((props) => ({
+export const ProgressCircle = styled(ProgressCircleSVG).attrs((props) => ({
   progressColor: props.theme[props.color] || props.theme.secondary,
-  backgroundColor: props.background || util.toAlpha(props.theme.primary, 20),
+  backgroundColor: props.background || props.theme.primary
 }))`
   width: ${(props) => props.size || '120px'};
   height: ${(props) => props.size || '120px'};
   position: absolute;
-`; */
+`; 
 
 export const ProgressBar = styled(ProgressBarPaper).attrs((props) => ({
   color: props.theme[props.color] || props.theme.info,
@@ -175,3 +180,7 @@ export const ActivityIndicator = styled(ActivityIndicatorPaper).attrs(
     color: props.theme[props.color],
   })
 )``;
+
+export const FlatListData = styled.FlatList`
+  width: 100%;
+`
