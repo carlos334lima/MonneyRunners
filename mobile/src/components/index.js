@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 
-import { FlatList } from 'react-native'
+import { FlatList } from "react-native";
 
 import {
   Text as TextPaper,
@@ -14,11 +14,11 @@ import {
 
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { LinearGradient } from "expo-linear-gradient";
-import { ProgressCircle as ProgressCircleSVG } from 'react-native-svg-charts';
+import { ProgressCircle as ProgressCircleSVG } from "react-native-svg-charts";
 
 import { ScrollView as ScrollViewComponent } from "react-native-gesture-handler";
 
-//import util from '../util';
+import util from "../Utils";
 
 export const ScrollView = styled(ScrollViewComponent)`
   width: 100%;
@@ -31,14 +31,14 @@ export const Spacer = styled.View`
   height: ${(props) => props.size || "10px"};
 `;
 
-export const Cover = styled.ImageBackground.attrs((props) =>({
-  resizeMode: props.mode || 'contain'
+export const Cover = styled.ImageBackground.attrs((props) => ({
+  resizeMode: props.mode || "contain",
 }))`
-  width: ${(props) => props.width || '100px'};
-  height: ${(props) => props.height || '100px'};
-  margin: ${(props) => props.spacing || '0px'};
-  border-radius: ${(props) => props.rounded || 0 };
-  border: ${(props) => props.border || 'none'};
+  width: ${(props) => props.width || "100px"};
+  height: ${(props) => props.height || "100px"};
+  margin: ${(props) => props.spacing || "0px"};
+  border-radius: ${(props) => props.rounded || 0};
+  border: ${(props) => props.border || "none"};
   overflow: hidden;
 `;
 
@@ -110,18 +110,21 @@ export const Text = styled(TextPaper).attrs({})`
 `;
 
 export const Badge = styled(BadgePaper)`
-  align-self: flex-start;
   width: auto;
   height: auto;
+  align-self: flex-start;
+
   font-size: ${(props) => (props.big ? "20px" : "16px")};
   padding: ${(props) => (props.big ? "12px 15px" : "5px 10px")};
+
   line-height: 25px;
   margin: ${(props) => props.spacing || "0px"};
-  align-self: ${(props) => props.align || "flex-start"};
-  border-radius: 100px;
   color: ${(props) => props.theme[props.color || "danger"]};
+
   background: ${(props) =>
     util.toAlpha(props.theme[props.color || "danger"], 20)};
+
+  align-self: ${(props) => props.align || "flex-start"};
 `;
 
 export const Button = styled(ButtonPaper).attrs((props) => ({
@@ -133,7 +136,7 @@ export const Button = styled(ButtonPaper).attrs((props) => ({
     letterSpacing: 0,
     fontFamily: "Ubuntu_400Regular",
   },
-  mode: props.mode || 'contained',
+  mode: props.mode || "contained",
 }))``;
 
 export const TextInput = styled(TextInputPaper).attrs(({ theme }) => ({
@@ -153,17 +156,16 @@ export const TextInput = styled(TextInputPaper).attrs(({ theme }) => ({
   height: 45px;
   width: 100%;
   font-size: 15px;
-  
 `;
 
 export const ProgressCircle = styled(ProgressCircleSVG).attrs((props) => ({
   progressColor: props.theme[props.color] || props.theme.secondary,
-  backgroundColor: props.background || props.theme.primary
+  backgroundColor: props.background || props.theme.primary,
 }))`
-  width: ${(props) => props.size || '120px'};
-  height: ${(props) => props.size || '120px'};
+  width: ${(props) => props.size || "120px"};
+  height: ${(props) => props.size || "120px"};
   position: absolute;
-`; 
+`;
 
 export const ProgressBar = styled(ProgressBarPaper).attrs((props) => ({
   color: props.theme[props.color] || props.theme.info,
@@ -183,4 +185,4 @@ export const ActivityIndicator = styled(ActivityIndicatorPaper).attrs(
 
 export const FlatListData = styled.FlatList`
   width: 100%;
-`
+`;
