@@ -18,7 +18,7 @@ import {
 import { ThemeProvider } from 'styled-components/native';
 import { Provider as PaperProvider } from 'react-native-paper';
 
-import Payment from './src/screens/Payment';
+import Timer from './src/screens/Timer';
 
 //import store from './src/store';
 import { colors } from './src/assets/theme.json';
@@ -44,7 +44,7 @@ const App = () => {
    
       <ThemeProvider theme={colors}>
         <PaperProvider>
-          <Payment />
+          <Timer />
         </PaperProvider>
       </ThemeProvider>
    
