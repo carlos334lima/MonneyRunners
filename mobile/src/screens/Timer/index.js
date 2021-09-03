@@ -1,11 +1,19 @@
 import React from "react";
 
-import { Box, Text, Title, Spacer, ProgressCircle, Badge, Button } from "../../components";
+import {
+  Box,
+  Text,
+  Title,
+  Spacer,
+  ProgressCircle,
+  Badge,
+  Button,
+} from "../../components";
 
 const Timer = () => {
   return (
     <Box hasPadding justify="center" align="center" background="dark">
-        <Spacer size="20px"/>
+      <Spacer size="20px" />
       <Text>Tempo Restante</Text>
       <Spacer />
       <Title big color="danger">
@@ -35,11 +43,11 @@ const Timer = () => {
 
       <Spacer size="20px" />
       <Badge align="center" big color="danger">
-          R$ -10,00
+        R$ -10,00
       </Badge>
       <Spacer size="30px" />
-      <Button block background="danger"> 
-          DESISTIR 🥵
+      <Button block background="danger">
+        DESISTIR 🥵
       </Button>
       <Spacer size="20px" />
     </Box>
