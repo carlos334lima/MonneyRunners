@@ -23,6 +23,7 @@ import Timer from './src/screens/Timer';
 //import store from './src/store';
 import { colors } from './src/assets/theme.json';
 import Ranking from './src/screens/Ranking';
+import Balance from './src/screens/Balance';
 
 const App = () => {
   let [fontsLoaded] = useFonts({
@@ -45,7 +46,7 @@ const App = () => {
    
       <ThemeProvider theme={colors}>
         <PaperProvider>
-          <Ranking />
+          <Balance />
         </PaperProvider>
       </ThemeProvider>
    

@@ -63,7 +63,7 @@ const Ranking = () => {
                 }}
               />
               <Box>
-                <Text color="light" bold opacity={1}>
+                <Text color="light" bold opacity={1} spacing="0px 0px 5px 0">
                   Carlos Lima
                 </Text>
                 <Text small>50% (25 dias)</Text>
