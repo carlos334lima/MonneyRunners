@@ -1,6 +1,7 @@
 import React from "react";
 import { FlatList } from "react-native";
 
+//@styles
 import {
   Box,
   Spacer,
@@ -37,7 +38,7 @@ const Ranking = () => {
       <FlatList
         style={{
           width: "100%",
-          height: 300,
+          height: 250,
         }}
         data={[1, 2, 3, 4, 5, 6, 8]}
         keyExtractor={(item) => item.toString() + new Date().getTime()}
@@ -69,12 +70,7 @@ const Ranking = () => {
                 <Text small>50% (25 dias)</Text>
               </Box>
             </Box>
-
-            <ProgressBar 
-                progress={0.7}
-                color="danger"
-               
-            />
+            <ProgressBar progress={0.7} color="danger" />
           </Box>
         )}
       />

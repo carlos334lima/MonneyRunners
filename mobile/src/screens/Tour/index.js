@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { Platform } from "react-native";
 
+//@assets
 import illustration01 from "../../assets/illustration-1.png";
 import illustration02 from "../../assets/illustration-2.png";
 import illustration03 from "../../assets/illustration-3.png";
+
+//@libraries
+import { useNavigation } from "@react-navigation/native";
 
 //@Styles
 import { Box, Title, Spacer, Cover, Text, Button } from "../../components";
@@ -33,39 +37,40 @@ const Tour = () => {
     },
   ];
 
+  const navigation = useNavigation();
+
   const [actualTour, setActualTour] = useState(0);
 
-  function handleActualTour() {
-    setActualTour(actualTour + 1);
-  }
-
   return (
-    <Box background={tourData[actualTour]?.bg} hasPadding justify="center">
-      <Spacer size={Platform.OS === "android" ? "15px" : "30px"} />
-      <Title big color="light">
-        {tourData[actualTour]?.title}
-      </Title>
+    <Box background={tourData[actualTour]?.bg} hasPadding align="center">
+      <Box hasPadding>
+        <Spacer size="30px" />
+        <Title color="light" bold style={{ fontSize: 40, paddingTop: 10 }}>
+          {tourData[actualTour]?.title}
+        </Title>
+        <Spacer size="30px" />
+        <Cover
+          resizeMode="contain"
+          width="100%"
+          height="300px"
+          source={tourData[actualTour]?.pic}
+          transparent
+        />
 
-      <Spacer size={Platform.OS === "android" ? "15px" : "30px"} />
-
-      <Cover
-        source={tourData[actualTour]?.pic}
-        width="100%"
-        height={Platform.OS === "android" ? "200px" : "300px"}
-      />
-
-      <Spacer size={Platform.OS === "android" ? "15px" : "30px"} />
-
-      <Text align="center" small hasPadding>
-        {tourData[actualTour]?.desc}
-      </Text>
-
+        <Text align="center" color="light">
+          {tourData[actualTour]?.desc}
+        </Text>
+        <Spacer size="20px" />
+      </Box>
       <Button
         block
         background={tourData[actualTour]?.button}
-        onPress={handleActualTour}
+        onPress={() => {
+          actualTour === 2 && navigation.navigate("Login");
+          setActualTour(actualTour + 1);
+        }}
       >
-        {actualTour === 2 ? "Explorar" : "Próximo"}
+        {actualTour === 2 ? "Explorar Desafio" : "Próximo"}
       </Button>
     </Box>
   );

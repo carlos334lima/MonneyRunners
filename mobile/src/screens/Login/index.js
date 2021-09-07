@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { BackHandler } from "react-native";
 
 //@assets
 import logo from "../../assets/logo.png";
@@ -7,7 +8,6 @@ import logo from "../../assets/logo.png";
 import ModalLogin, {
   ModalRef as ModalLoginRef,
 } from "../../components/Modal/Login";
-
 import ModalInvite, {
   ModalRef as ModalInviteRef,
 } from "../../components/Modal/Invite";
@@ -16,6 +16,15 @@ import ModalInvite, {
 import { Box, Button, Cover, Spacer, Text } from "../../components/";
 
 const Login = () => {
+  useEffect(() => {
+    BackHandler.addEventListener("hardwareBackPress", () => {
+      return null;
+    });
+    return () => {
+      BackHandler.removeEventListener();
+    };
+  }, []);
+
   return (
     <>
       <ModalLogin />
@@ -30,7 +39,11 @@ const Login = () => {
           Entrar na minha conta
         </Button>
         <Spacer />
-        <Button block mode="text" onPress={() => ModalInviteRef.current?.open()}>
+        <Button
+          block
+          mode="text"
+          onPress={() => ModalInviteRef.current?.open()}
+        >
           {" "}
           Pedir convite
         </Button>

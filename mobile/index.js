@@ -24,6 +24,9 @@ import Timer from './src/screens/Timer';
 import { colors } from './src/assets/theme.json';
 import Ranking from './src/screens/Ranking';
 import Balance from './src/screens/Balance';
+import Tour from './src/screens/Tour';
+
+import Routes from './src/routes/index';
 
 const App = () => {
   let [fontsLoaded] = useFonts({
@@ -46,7 +49,7 @@ const App = () => {
    
       <ThemeProvider theme={colors}>
         <PaperProvider>
-          <Balance />
+          <Routes />
         </PaperProvider>
       </ThemeProvider>
    
