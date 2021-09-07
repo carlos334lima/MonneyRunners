@@ -27,7 +27,7 @@
     "expo-task-manager": "~9.2.2",
     "expo-updates": "~0.8.1",
     "gerador-validador-cpf": "^5.0.1",
-    "immer": "^9.0.5",
+    "immer": "^9.0.6",
     "moment": "^2.29.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
