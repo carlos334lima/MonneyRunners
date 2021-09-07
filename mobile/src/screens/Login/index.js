@@ -18,11 +18,8 @@ import { Box, Button, Cover, Spacer, Text } from "../../components/";
 const Login = () => {
   useEffect(() => {
     BackHandler.addEventListener("hardwareBackPress", () => {
-      return null;
+      return true;
     });
-    return () => {
-      BackHandler.removeEventListener();
-    };
   }, []);
 
   return (
