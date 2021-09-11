@@ -12,6 +12,7 @@ import { Box, Title, Spacer, Button, TextInput } from "../../index";
 
 //@actions
 import { setUser as setUserAction } from "../../../store/modules/app/actions";
+import UploadImage from "../../UploadImage";
 
 export const ModalRef = createRef();
 
@@ -28,7 +29,9 @@ const ModalInvite = () => {
     <Modalize ref={ModalRef} adjustToContentHeight>
       <Box background="dark" hasPadding>
         <Title color="light">Peça seu convite</Title>
+        <Spacer />
 
+        <UploadImage />
         <Spacer />
         <TextInput
           label="Nome"
