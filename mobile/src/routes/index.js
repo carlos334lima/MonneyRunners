@@ -17,9 +17,13 @@ import Timer from "../screens/Timer";
 import Payment from "../screens/Payment";
 
 //@screens - StackNavigation
+import Splash from "../screens/Splash";
 import Home from "../screens/Home";
 import Ranking from "../screens/Ranking";
 import Balance from "../screens/Balance";
+
+//@utils
+import { navigate, navigationRef } from "../Utils/navigation";
 
 const TabNavigation = createBottomTabNavigator();
 const StackNavigation = createNativeStackNavigator();
@@ -87,10 +91,10 @@ export default function Routes() {
   return (
     <>
       <StatusBar backgroundColor={colors.dark} />
-      <NavigationContainer>
-        <StackNavigation.Navigator initialRouteName="Tour">
+      <NavigationContainer ref={navigationRef}>
+        <StackNavigation.Navigator initialRouteName="Login">
           <StackNavigation.Screen
-            options={{ headerShown: false}}
+            options={{ headerShown: false }}
             name="Home"
             component={HomeTabs}
           />
@@ -101,7 +105,7 @@ export default function Routes() {
             component={Tour}
           />
           <StackNavigation.Screen
-            options={{ headerShown: false  }}
+            options={{ headerShown: false }}
             name="Login"
             component={Login}
           />

@@ -28,6 +28,7 @@
     "expo-updates": "~0.8.1",
     "gerador-validador-cpf": "^5.0.1",
     "immer": "^9.0.6",
+    "lottie-react-native": "^4.0.3",
     "moment": "^2.29.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",

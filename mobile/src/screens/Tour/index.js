@@ -1,54 +1,56 @@
-import React, { useState } from "react";
-import { Platform } from "react-native";
+import React, { useState } from 'react';
+import { replace } from '../../Utils/navigation/index.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-//@assets
-import illustration01 from "../../assets/illustration-1.png";
-import illustration02 from "../../assets/illustration-2.png";
-import illustration03 from "../../assets/illustration-3.png";
+import { Box, Title, Text, Spacer, Cover, Button } from '../../components';
 
-//@libraries
-import { useNavigation } from "@react-navigation/native";
+import illustrationOne from '../../assets/illustration-1.png';
+import illustrationTwo from '../../assets/illustration-2.png';
+import illustrationThree from '../../assets/illustration-3.png';
 
-//@Styles
-import { Box, Title, Spacer, Cover, Text, Button } from "../../components";
+import {useNavigation} from '@react-navigation/native'
 
 const Tour = () => {
-  const tourData = [
-    {
-      bg: "dark",
-      button: "info",
-      title: "Planejamento com motivação.",
-      desc: "Pensamos em um serviço perfeito pra você não perder mais aquele compromisso inadiável (denovo).",
-      pic: illustration01,
-    },
-    {
-      bg: "info",
-      button: "dark",
-      title: "Construa hábitos por bem (ou mal).",
-      desc: "Pensamos em um serviço perfeito pra você não perder mais aquele compromisso inadiável (denovo).",
-      pic: illustration02,
-    },
-    {
-      bg: "dark",
-      button: "info",
-      title: "Ganhe dinheiro com os amigos.",
-      desc: "Pensamos em um serviço perfeito pra você não perder mais aquele compromisso inadiável (denovo).",
-      pic: illustration03,
-    },
-  ];
 
   const navigation = useNavigation();
 
+  const tourData = [
+    {
+      bg: 'dark',
+      button: 'info',
+      title: 'Planejamento com motivação.',
+      desc: 'Pensamos em um serviço perfeito pra você não perder mais aquele compromisso inadiável (denovo).',
+      pic: illustrationOne,
+    },
+    {
+      bg: 'info',
+      button: 'dark',
+      title: 'Construa hábitos por bem (ou mal).',
+      desc: 'Pensamos em um serviço perfeito pra você não perder mais aquele compromisso inadiável (denovo).',
+      pic: illustrationTwo,
+    },
+    {
+      bg: 'dark',
+      button: 'info',
+      title: 'Ganhe dinheiro com os amigos.',
+      desc: 'Pensamos em um serviço perfeito pra você não perder mais aquele compromisso inadiável (denovo).',
+      pic: illustrationThree,
+    },
+  ];
+
   const [actualTour, setActualTour] = useState(0);
+
+  const goLogin = async () => {
+    await AsyncStorage.setItem('@tour', 'Y');
+    replace('Login')
+  };
 
   return (
     <Box background={tourData[actualTour]?.bg} hasPadding align="center">
       <Box hasPadding>
-        <Spacer size="30px" />
-        <Title color="light" bold style={{ fontSize: 40, paddingTop: 10 }}>
+        <Title color="light" big bold>
           {tourData[actualTour]?.title}
         </Title>
-        <Spacer size="30px" />
         <Cover
           resizeMode="contain"
           width="100%"
@@ -61,17 +63,21 @@ const Tour = () => {
           {tourData[actualTour]?.desc}
         </Text>
         <Spacer size="20px" />
+        <Button
+          block
+          background={tourData[actualTour]?.button}
+          onPress={() => {
+            if (actualTour === 2) {
+              // NAVIGATE DO LOGIN
+              goLogin();
+            } else {
+              setActualTour(actualTour + 1);
+            }
+          }}
+        >
+          {actualTour === 2 ? 'Explorar Desafio' : 'Próximo'}
+        </Button>
       </Box>
-      <Button
-        block
-        background={tourData[actualTour]?.button}
-        onPress={() => {
-          actualTour === 2 && navigation.navigate("Login");
-          setActualTour(actualTour + 1);
-        }}
-      >
-        {actualTour === 2 ? "Explorar Desafio" : "Próximo"}
-      </Button>
     </Box>
   );
 };

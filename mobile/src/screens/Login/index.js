@@ -4,6 +4,9 @@ import { BackHandler } from "react-native";
 //@assets
 import logo from "../../assets/logo.png";
 
+//@libraries
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 //@components
 import ModalLogin, {
   ModalRef as ModalLoginRef,
@@ -15,7 +18,21 @@ import ModalInvite, {
 //@styles
 import { Box, Button, Cover, Spacer, Text } from "../../components/";
 
+//@Utils
+import { navigate } from "../../Utils/navigation";
+
 const Login = () => {
+  useEffect(() => {
+    primaryTourApp();
+  }, []);
+
+  async function primaryTourApp() {
+    const response = await AsyncStorage.getItem("@tour");
+    if (response !== "Y") {
+      navigate("Tour");
+    }
+  }
+
   useEffect(() => {
     BackHandler.addEventListener("hardwareBackPress", () => {
       return true;

@@ -1,7 +1,11 @@
-import React from 'react';
-import 'react-native-gesture-handler';
-import { registerRootComponent } from 'expo';
+import React from "react";
+import "react-native-gesture-handler";
+import { registerRootComponent } from "expo";
 
+//libraries
+import { ThemeProvider } from "styled-components/native";
+import { Provider } from "react-redux";
+import { Provider as PaperProvider } from "react-native-paper";
 import {
   useFonts,
   Ubuntu_300Light,
@@ -12,21 +16,14 @@ import {
   Ubuntu_500Medium_Italic,
   Ubuntu_700Bold,
   Ubuntu_700Bold_Italic,
-} from '@expo-google-fonts/ubuntu';
+} from "@expo-google-fonts/ubuntu";
 
-//import { Provider as StoreProviver } from 'react-redux';
-import { ThemeProvider } from 'styled-components/native';
-import { Provider as PaperProvider } from 'react-native-paper';
+import { colors } from "./src/assets/theme.json";
 
-import Timer from './src/screens/Timer';
+import Routes from "./src/routes";
+import store from "./src/store";
 
-//import store from './src/store';
-import { colors } from './src/assets/theme.json';
-import Ranking from './src/screens/Ranking';
-import Balance from './src/screens/Balance';
-import Tour from './src/screens/Tour';
-
-import Routes from './src/routes/index';
+import Splash from './src/screens/Splash'
 
 const App = () => {
   let [fontsLoaded] = useFonts({
@@ -41,18 +38,17 @@ const App = () => {
   });
 
   if (!fontsLoaded) {
-    // PODERIA EXIBIR A SPLASH SCREEN
-    return null;
+    return null
   }
 
   return (
-   
+    <Provider store={store}>
       <ThemeProvider theme={colors}>
         <PaperProvider>
           <Routes />
         </PaperProvider>
       </ThemeProvider>
-   
+    </Provider>
   );
 };
 
