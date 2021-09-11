@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BackHandler } from "react-native";
 
 //@assets
@@ -16,20 +16,41 @@ import ModalInvite, {
 } from "../../components/Modal/Invite";
 
 //@styles
-import { Box, Button, Cover, Spacer, Text } from "../../components/";
+import {
+  ActivityIndicator,
+  Box,
+  Button,
+  Cover,
+  Spacer,
+  Text,
+} from "../../components/";
 
 //@Utils
-import { navigate } from "../../Utils/navigation";
+import { navigate, replace } from "../../Utils/navigation";
 
 const Login = () => {
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    primaryTourApp();
+    getLoggedState();
   }, []);
 
-  async function primaryTourApp() {
-    const response = await AsyncStorage.getItem("@tour");
-    if (response !== "Y") {
-      navigate("Tour");
+  async function getLoggedState() {
+    //AsyncStorage.clear();
+    const user = await AsyncStorage.getItem("@user");
+    const tour = await AsyncStorage.getItem("@tour");
+
+    if (!tour) {
+      replace("Tour");
+      return false;
+    }
+
+    if (!user) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
+    } else {
+      replace("Home");
     }
   }
 
@@ -49,25 +70,31 @@ const Login = () => {
 
         <Spacer size="40px" />
 
-        <Button block onPress={() => ModalLoginRef.current?.open()}>
-          Entrar na minha conta
-        </Button>
-        <Spacer />
-        <Button
-          block
-          mode="text"
-          onPress={() => ModalInviteRef.current?.open()}
-        >
-          {" "}
-          Pedir convite
-        </Button>
+        {loading ? (
+          <ActivityIndicator color="danger" />
+        ) : (
+          <>
+            <Button block onPress={() => ModalLoginRef.current?.open()}>
+              Entrar na minha conta
+            </Button>
+            <Spacer />
+            <Button
+              block
+              mode="text"
+              onPress={() => ModalInviteRef.current?.open()}
+            >
+              {" "}
+              Pedir convite
+            </Button>
 
-        <Text small hasPadding align="center">
-          Ao fazer login você concorda com {"\n"} nossos{" "}
-          <Text underline small color="info">
-            TERMOS & CONDIÇÕES
-          </Text>
-        </Text>
+            <Text small hasPadding align="center">
+              Ao fazer login você concorda com {"\n"} nossos{" "}
+              <Text underline small color="info">
+                TERMOS & CONDIÇÕES
+              </Text>
+            </Text>
+          </>
+        )}
       </Box>
     </>
   );

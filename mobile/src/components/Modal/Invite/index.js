@@ -2,54 +2,96 @@ import React, { createRef } from "react";
 
 //@libraries
 import { Modalize } from "react-native-modalize";
+import { useDispatch, useSelector } from "react-redux";
 
 //@components
-import TextInputMaskComponent from '../../TextInputMask'
+import TextInputMaskComponent from "../../TextInputMask";
 
 //@styles
 import { Box, Title, Spacer, Button, TextInput } from "../../index";
 
+//@actions
+import { setUser as setUserAction } from "../../../store/modules/app/actions";
+
 export const ModalRef = createRef();
 
 const ModalInvite = () => {
+  const dispatch = useDispatch();
+
+  const { useForm, form } = useSelector((state) => state.app);
+
+  const setUser = (payload) => {
+    dispatch(setUserAction(payload));
+  };
+
   return (
     <Modalize ref={ModalRef} adjustToContentHeight>
       <Box background="dark" hasPadding>
         <Title color="light">Peça seu convite</Title>
 
         <Spacer />
-        <TextInput label="Nome" placeholder="Digite seu nome" />
+        <TextInput
+          label="Nome"
+          placeholder="Digite seu nome"
+          disabled={useForm?.saving}
+          value={useForm?.name}
+          onChangeText={(name) => {
+            setUser({ name });
+          }}
+        />
 
         <Spacer />
-        <TextInput label="E-mail" placeholder="Digite seu e-mail" />
+        <TextInput
+          label="E-mail"
+          placeholder="Digite seu e-mail"
+          disabled={useForm?.saving}
+          value={useForm?.email}
+          onChangeText={(email) => {
+            setUser({ email });
+          }}
+        />
 
         <Spacer />
         <TextInputMaskComponent
           label="Data de nascimento"
           placeholder="Digite sua data de nascimento"
-          type={'datetime'}
+          type={"datetime"}
           options={{
-            format: 'DD/MM/YYYY'
+            format: "DD/MM/YYYY",
+          }}
+          disabled={useForm?.saving}
+          value={useForm?.birthday}
+          onChangeText={(birthday) => {
+            setUser({ birthday });
           }}
         />
 
         <Spacer />
-        <TextInputMaskComponent 
-          label="Telefone" 
-          placeholder="(XX) X XXXX-XXXX" 
-          type={'cel-phone'}
+        <TextInputMaskComponent
+          label="Telefone"
+          placeholder="(XX) X XXXX-XXXX"
+          type={"cel-phone"}
           options={{
-            maskType: 'BRL',
+            maskType: "BRL",
             withDDD: true,
-            dddMask: '(99) '
+            dddMask: "(99) ",
           }}
-       />
+          disabled={useForm?.saving}
+          value={useForm?.phone}
+          onChangeText={(phone) => {
+            setUser({ phone });
+          }}
+        />
 
         <Spacer />
-        <TextInputMaskComponent 
-          label="CPF" 
-          placeholder="XXX.XXX.XX.XX" 
-          type={'cpf'}
+        <TextInputMaskComponent
+          label="CPF"
+          placeholder="XXX.XXX.XX.XX"
+          type={"cpf"}
+          value={useForm?.cpf}
+          onChangeText={(cpf) => {
+            setUser({ cpf });
+          }}
         />
 
         <Spacer />
@@ -57,6 +99,10 @@ const ModalInvite = () => {
           label="Senha"
           placeholder="Digite sua senha"
           secureTextEntry
+          value={useForm?.password}
+          onChangeText={(password) => {
+            setUser({ password });
+          }}
         />
 
         <Spacer />
@@ -64,6 +110,10 @@ const ModalInvite = () => {
           label="Confirme a senha"
           placeholder="Confirme sua senha"
           secureTextEntry
+          value={useForm?.passwordConfirm}
+          onChangeText={(passwordConfirm) => {
+            setUser({ passwordConfirm });
+          }}
         />
 
         <Spacer size="20px" />
