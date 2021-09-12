@@ -31,7 +31,12 @@ const ModalInvite = () => {
         <Title color="light">Peça seu convite</Title>
         <Spacer />
 
-        <UploadImage />
+        <UploadImage
+          callback={(photo) => {
+            setUser({ photo: photo?.uri})
+            console.tron.log(photo);
+          }}
+        />
         <Spacer />
         <TextInput
           label="Nome"
