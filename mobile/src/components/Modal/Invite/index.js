@@ -11,8 +11,13 @@ import TextInputMaskComponent from "../../TextInputMask";
 import { Box, Title, Spacer, Button, TextInput } from "../../index";
 
 //@actions
-import { setUser as setUserAction } from "../../../store/modules/app/actions";
+import {
+  setUser as setUserAction,
+  saveUsers as saveUsersAction,
+} from "../../../store/modules/app/actions";
 import UploadImage from "../../UploadImage";
+import InviteSchema from "../../../schemas/invite.schema";
+import { Alert } from "react-native";
 
 export const ModalRef = createRef();
 
@@ -20,6 +25,15 @@ const ModalInvite = () => {
   const dispatch = useDispatch();
 
   const { useForm, form } = useSelector((state) => state.app);
+
+  const sendInvite = async () => {
+    try {
+      await InviteScheme.validate(userForm);
+      dispatch(saveUser());
+    } catch ({ errors }) {
+      Alert.alert('Corrija o erro antes de continar.');
+    }
+  };
 
   const setUser = (payload) => {
     dispatch(setUserAction(payload));
@@ -33,8 +47,8 @@ const ModalInvite = () => {
 
         <UploadImage
           callback={(photo) => {
-            setUser({ photo: photo?.uri})
-            console.tron.log(photo);
+            setUser({ photo: photo?.uri });
+            //console.tron.log(photo);
           }}
         />
         <Spacer />
@@ -125,7 +139,7 @@ const ModalInvite = () => {
         />
 
         <Spacer size="20px" />
-        <Button block background="success">
+        <Button block background="success" onPress={() => sendInvite()}>
           Enviar dados
         </Button>
       </Box>

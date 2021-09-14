@@ -3,4 +3,9 @@ import types from "./types";
 
 export function* loginUser() {}
 
-export default all([takeLatest(types.LOGIN_USERS, loginUser)]);
+export function* saveUsers() {}
+
+export default all([
+    takeLatest(types.LOGIN_USERS, loginUser),
+    takeLatest(types.SAVE_USERS, saveUsers),
+]);
