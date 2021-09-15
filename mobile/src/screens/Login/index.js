@@ -9,10 +9,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 //@components
 import ModalLogin, {
-  ModalRef as ModalLoginRef,
+  modalRef as ModalLoginRef,
 } from "../../components/Modal/Login";
 import ModalInvite, {
-  ModalRef as ModalInviteRef,
+  modalRef as ModalInviteRef,
 } from "../../components/Modal/Invite";
 
 //@styles

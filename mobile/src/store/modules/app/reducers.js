@@ -22,10 +22,19 @@ export default function app(state = INITIAL_STATE, action) {
       break;
 
     case types.SET_USERS:
-      console.tron.log(action.payload)
+      console.tron.log(action.payload);
       {
         return produce(state, (draft) => {
           draft.userForm = { ...state.userForm, ...action.payload };
+        });
+      }
+      break;
+
+    case types.SET_FORM:
+      console.tron.log(action.payload);
+      {
+        return produce(state, (draft) => {
+          draft.form = { ...state.form, ...action.payload };
         });
       }
       break;

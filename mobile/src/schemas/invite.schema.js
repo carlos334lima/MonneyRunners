@@ -7,14 +7,7 @@ let InviteSchema = yup.object().shape({
     .required(),
   email: yup.string().email().required("Digite um e-mail válido"),
   photo: yup.object().required("Selecione uma foto"),
-  cpf: yup
-    .string()
-    .test({
-      name: "cpf_validation",
-      message: "Digite um CPF válido",
-      test: (cpf) => validate(cpf),
-    })
-    .required("Digite seu CPF"),
+  cpf: yup.string().required("Digite seu CPF"),
   phone: yup
     .string()
     .min(14, "Digite um telefone válido")
@@ -33,4 +26,3 @@ let InviteSchema = yup.object().shape({
 });
 
 export default InviteSchema;
-
