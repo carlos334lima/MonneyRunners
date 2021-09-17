@@ -13,7 +13,7 @@ export function setUser(payload) {
 }
 
 export function setForm(payload) {
-  return { type: types.SET_USERS, payload };
+  return { type: types.SET_FORM, payload };
 }
 
 export function reset(key) {
