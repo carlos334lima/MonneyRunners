@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 
-import { URI_DATABASE } from 'react-native-dotenv'
 
 const URI = "mongodb+srv://monneyRunners:RIbb0wMDzo6xupmh@dev.4jkas.mongodb.net/monneyRunners?retryWrites=true&w=majority";
 
