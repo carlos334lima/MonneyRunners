@@ -74,7 +74,10 @@ const Login = () => {
           <ActivityIndicator color="danger" />
         ) : (
           <>
-            <Button block onPress={() => ModalLoginRef.current?.open()}>
+             <Button
+              block
+              onPress={() => ModalLoginRef.current?.open()}
+            >
               Entrar na minha conta
             </Button>
             <Spacer />

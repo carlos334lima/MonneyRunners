@@ -134,9 +134,9 @@ const ModalInvite = () => {
         <Button
           loading={form?.saving}
           disabled={form?.saving}
+          onPress={() => sendInvite()}
           block
           background="success"
-          onPress={() => sendInvite()}
         >
           Pedir Convite
         </Button>

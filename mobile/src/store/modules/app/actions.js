@@ -16,6 +16,10 @@ export function setForm(payload) {
   return { type: types.SET_FORM, payload };
 }
 
+export function loginUser() {
+  return { type: types.LOGIN_USERS };
+}
+
 export function reset(key) {
   return { type: types.SET_USERS, key };
 }

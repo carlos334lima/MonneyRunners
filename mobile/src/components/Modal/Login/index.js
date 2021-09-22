@@ -6,20 +6,65 @@ import { Modalize } from "react-native-modalize";
 //@styles
 import { Box, Title, Spacer, Button, TextInput } from "../../index";
 
-export const ModalRef = createRef();
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+
+import { setUser as setUserAction, loginUser } from "../../../store/modules/app/actions";
+import LoginScheme from "../../../schemas/login.schema";
+import { Alert } from "react-native";
+
+
+export const modalRef = createRef();
 
 const ModalLogin = () => {
+  const dispatch = useDispatch();
+  const { userForm, form } = useSelector((state) => state.app);
+
+  const setUser = (payload) => {
+    dispatch(setUserAction(payload));
+  };
+
+  const sendLogin = async () => {
+    try {
+      await LoginScheme.validate(userForm);
+      dispatch(loginUser());
+    } catch ({ errors }) {
+      Alert.alert( 'Corrija o erro antes de continar.');
+    }
+  };
+
   return (
-    <Modalize ref={ModalRef} adjustToContentHeight>
+    <Modalize ref={modalRef} adjustToContentHeight>
       <Box background="dark" hasPadding>
         <Title color="light">Entre com o seus dados</Title>
         <Spacer />
-        <TextInput label="E-mail" placeholder="Digite seu e-mail" />
-
+        <TextInput
+          label="E-mail"
+          keyboardType="email-address"
+          value={userForm?.email}
+          disabled={form?.loading}
+          onChangeText={(email) => {
+            setUser({ email });
+          }}
+        />
         <Spacer />
-        <TextInput label="Senha" placeholder="Digite sua senha" secureTextEntry/>
-        <Spacer size="20px"/>
-        <Button block background="success">
+        <TextInput
+          value={userForm?.password}
+          disabled={form?.loading}
+          onChangeText={(password) => {
+            setUser({ password });
+          }}
+          label="Senha"
+          secureTextEntry
+        />
+        <Spacer size="10px" />
+        <Button
+          disabled={form?.loading}
+          loading={form?.loading}
+          block
+          background="success"
+          onPress={() => sendLogin()}
+        >
           Fazer Login
         </Button>
       </Box>
