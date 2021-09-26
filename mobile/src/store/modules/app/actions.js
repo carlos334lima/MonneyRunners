@@ -1,7 +1,7 @@
 import types from "./types";
 
 export function setReducer(payload, key) {
-  return { type: types.LOGIN_USERS, payload, key };
+  return { type: types.SET_REDUCER, payload, key };
 }
 
 export function saveUsers() {
