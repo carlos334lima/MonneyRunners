@@ -1,6 +1,9 @@
 import React from "react";
 
+//@libraries
 import YoutubePlayer from "react-native-youtube-iframe";
+
+//@styles
 import { Button, Spacer, Text, Title, Box } from "..";
 
 const Challenges = () => {

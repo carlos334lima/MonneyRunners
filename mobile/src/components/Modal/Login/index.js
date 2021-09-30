@@ -1,18 +1,19 @@
 import React, { createRef } from "react";
+import { Alert } from "react-native";
 
 //@libraries
 import { Modalize } from "react-native-modalize";
+import { useDispatch, useSelector } from "react-redux";
 
 //@styles
 import { Box, Title, Spacer, Button, TextInput } from "../../index";
 
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-
-import { setUser as setUserAction, loginUser } from "../../../store/modules/app/actions";
+//@utils
+import {
+  setUser as setUserAction,
+  loginUser,
+} from "../../../store/modules/app/actions";
 import LoginScheme from "../../../schemas/login.schema";
-import { Alert } from "react-native";
-
 
 export const modalRef = createRef();
 
@@ -29,7 +30,7 @@ const ModalLogin = () => {
       await LoginScheme.validate(userForm);
       dispatch(loginUser());
     } catch ({ errors }) {
-      Alert.alert( 'Corrija o erro antes de continar.');
+      Alert.alert("Corrija o erro antes de continar.");
     }
   };
 

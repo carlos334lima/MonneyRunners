@@ -1,11 +1,18 @@
-import React, { useEffect } from 'react';
-import { Alert } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
+import React, { useEffect } from "react";
+import { Alert } from "react-native";
 
-import { Box, Title, Text, Button, Spacer, Touchable, Cover } from '../index';
-import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
-import util from '../../Utils';
-import { colors } from '../../assets/theme.json';
+//@libraries
+import * as ImagePicker from "expo-image-picker";
+import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
+
+//@assets 
+import { colors } from "../../assets/theme.json";
+
+//@utils
+import util from "../../Utils";
+
+//@styles
+import { Box, Title, Text, Button, Spacer, Touchable, Cover } from "../index";
 
 const UploadImage = ({
   title,
@@ -17,20 +24,20 @@ const UploadImage = ({
 }) => {
   const requestAccess = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (status !== 'granted') {
+    if (status !== "granted") {
       Alert.alert(
-        'Permissão negaga.',
-        'Desculpe, mas precisamos acessar suas fotos.',
+        "Permissão negaga.",
+        "Desculpe, mas precisamos acessar suas fotos.",
         [
           {
-            text: 'Permitir Acesso',
+            text: "Permitir Acesso",
             onPress: () => {
               requestAccess();
             },
-            style: 'cancel',
+            style: "cancel",
           },
           {
-            text: 'Cancelar',
+            text: "Cancelar",
           },
         ]
       );

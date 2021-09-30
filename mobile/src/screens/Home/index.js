@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { View } from "react-native";
 
-import { colors } from "../../styles/theme.json";
-
+//@libraries
+import { useDispatch } from "react-redux";
 import YoutubePlayer from "../../components/Challenges";
 
+//@styles
 import {
   Box,
   GradientView,
@@ -20,11 +22,21 @@ import {
   Badge,
 } from "../../components";
 
+//@components
 import Load from "../../components/Load";
 import NoChallenges from "../../components/NoChallenges";
-import { View } from "react-native";
+
+//@utils
+import { getHome } from "../../store/modules/app/actions";
+import { colors } from "../../styles/theme.json";
 
 const Home = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getHome());
+  }, []);
+
   return (
     <ScrollView background="dark">
       <GradientView

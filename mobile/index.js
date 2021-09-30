@@ -2,7 +2,7 @@ import React from "react";
 import "react-native-gesture-handler";
 import { registerRootComponent } from "expo";
 
-//libraries
+//@libraries
 import { ThemeProvider } from "styled-components/native";
 import { Provider } from "react-redux";
 import { Provider as PaperProvider } from "react-native-paper";
@@ -18,12 +18,11 @@ import {
   Ubuntu_700Bold_Italic,
 } from "@expo-google-fonts/ubuntu";
 
-import { colors } from "./src/assets/theme.json";
 
 import Routes from "./src/routes";
 import store from "./src/store";
+import { colors } from "./src/assets/theme.json";
 
-import Splash from './src/screens/Splash'
 
 const App = () => {
   let [fontsLoaded] = useFonts({
@@ -38,7 +37,7 @@ const App = () => {
   });
 
   if (!fontsLoaded) {
-    return null
+    return null;
   }
 
   return (

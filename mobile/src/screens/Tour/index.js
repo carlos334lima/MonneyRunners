@@ -1,39 +1,43 @@
-import React, { useState } from 'react';
-import { replace } from '../../Utils/navigation/index.js';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState } from "react";
 
-import { Box, Title, Text, Spacer, Cover, Button } from '../../components';
+//@libraries
+import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import illustrationOne from '../../assets/illustration-1.png';
-import illustrationTwo from '../../assets/illustration-2.png';
-import illustrationThree from '../../assets/illustration-3.png';
+//@assets
+import illustrationOne from "../../assets/illustration-1.png";
+import illustrationTwo from "../../assets/illustration-2.png";
+import illustrationThree from "../../assets/illustration-3.png";
 
-import {useNavigation} from '@react-navigation/native'
+//@utils
+import { replace } from "../../Utils/navigation/index.js";
+
+//@styles
+import { Box, Title, Text, Spacer, Cover, Button } from "../../components";
 
 const Tour = () => {
-
   const navigation = useNavigation();
 
   const tourData = [
     {
-      bg: 'dark',
-      button: 'info',
-      title: 'Planejamento com motivação.',
-      desc: 'Pensamos em um serviço perfeito pra você não perder mais aquele compromisso inadiável (denovo).',
+      bg: "dark",
+      button: "info",
+      title: "Planejamento com motivação.",
+      desc: "Pensamos em um serviço perfeito pra você não perder mais aquele compromisso inadiável (denovo).",
       pic: illustrationOne,
     },
     {
-      bg: 'info',
-      button: 'dark',
-      title: 'Construa hábitos por bem (ou mal).',
-      desc: 'Pensamos em um serviço perfeito pra você não perder mais aquele compromisso inadiável (denovo).',
+      bg: "info",
+      button: "dark",
+      title: "Construa hábitos por bem (ou mal).",
+      desc: "Pensamos em um serviço perfeito pra você não perder mais aquele compromisso inadiável (denovo).",
       pic: illustrationTwo,
     },
     {
-      bg: 'dark',
-      button: 'info',
-      title: 'Ganhe dinheiro com os amigos.',
-      desc: 'Pensamos em um serviço perfeito pra você não perder mais aquele compromisso inadiável (denovo).',
+      bg: "dark",
+      button: "info",
+      title: "Ganhe dinheiro com os amigos.",
+      desc: "Pensamos em um serviço perfeito pra você não perder mais aquele compromisso inadiável (denovo).",
       pic: illustrationThree,
     },
   ];
@@ -41,8 +45,8 @@ const Tour = () => {
   const [actualTour, setActualTour] = useState(0);
 
   const goLogin = async () => {
-    await AsyncStorage.setItem('@tour', 'Y');
-    replace('Login')
+    await AsyncStorage.setItem("@tour", "Y");
+    replace("Login");
   };
 
   return (
@@ -75,7 +79,7 @@ const Tour = () => {
             }
           }}
         >
-          {actualTour === 2 ? 'Explorar Desafio' : 'Próximo'}
+          {actualTour === 2 ? "Explorar Desafio" : "Próximo"}
         </Button>
       </Box>
     </Box>

@@ -20,6 +20,10 @@ export function loginUser() {
   return { type: types.LOGIN_USERS };
 }
 
+export function getHome() {
+  return { type: types.GET_HOME };
+}
+
 export function reset(key) {
   return { type: types.SET_USERS, key };
 }

@@ -1,4 +1,6 @@
 import React from "react";
+
+//@styles
 import { Box, Button, Spacer, Text, Title } from "..";
 
 const NoChallenges = () => {

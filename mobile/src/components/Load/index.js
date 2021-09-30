@@ -1,4 +1,6 @@
 import React from "react";
+
+//@styles
 import { ActivityIndicator, Box, Spacer, Text, Title } from "..";
 
 const Load = () => {

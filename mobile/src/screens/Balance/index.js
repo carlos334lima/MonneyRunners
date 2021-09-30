@@ -1,6 +1,7 @@
 import React from "react";
 import { FlatList } from "react-native";
 
+//@styles
 import { Box, Title, Spacer, Text, Button, Badge } from "../../components";
 
 const Balance = () => {

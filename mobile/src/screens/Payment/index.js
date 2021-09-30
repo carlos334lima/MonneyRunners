@@ -1,16 +1,16 @@
 import React from "react";
+import { ScrollView } from "react-native";
 
 //@libraries
 import { CreditCardInput } from "react-native-credit-card-input";
 
+//@utils
 import { colors } from "../../styles/theme.json";
 
 //@styles
 import { Box, Title, Text, Button, Spacer } from "../../components";
-import { ScrollView } from "react-native";
 
 const Payment = () => {
-    
   return (
     <Box background="dark" hasPadding>
       <ScrollView>

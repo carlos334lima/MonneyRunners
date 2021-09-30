@@ -27,8 +27,12 @@ import {
 
 //@Utils
 import { navigate, replace } from "../../Utils/navigation";
+import { useDispatch } from "react-redux";
+import { setReducer } from "../../store/modules/app/actions";
 
 const Login = () => {
+  const dispatch = useDispatch();
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -50,6 +54,7 @@ const Login = () => {
         setLoading(false);
       }, 2000);
     } else {
+      dispatch(setReducer(JSON.parse(user), "user"));
       replace("Home");
     }
   }
@@ -74,10 +79,7 @@ const Login = () => {
           <ActivityIndicator color="danger" />
         ) : (
           <>
-             <Button
-              block
-              onPress={() => ModalLoginRef.current?.open()}
-            >
+            <Button block onPress={() => ModalLoginRef.current?.open()}>
               Entrar na minha conta
             </Button>
             <Spacer />
