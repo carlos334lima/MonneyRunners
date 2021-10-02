@@ -6,6 +6,7 @@ import produce from "immer";
 const INITIAL_STATE = {
   user: {},
   userForm: {},
+  payment: {},
   form: {
     loading: false,
     disabled: false,

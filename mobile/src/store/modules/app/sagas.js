@@ -149,8 +149,128 @@ export function* getHome() {
   }
 }
 
+export function* joinChallenge() {
+  const { user, challenge, payment } = yield select((state) => state.app);
+
+  yield put(setForm({ saving: true }));
+
+  try {
+    const { data: res } = yield call(api.post, `/challenge/join`, {
+      userId: user?._id,
+      challengeId: challenge?._id,
+      creditCard: payment,
+    });
+
+    if (res.error) {
+      Alert.alert("Ops!", res.message, [
+        {
+          text: "Tentar novamente",
+          onPress: () => {},
+        },
+      ]);
+      return false;
+    }
+
+    yield put(getHomeAction());
+    yield navigate("Home");
+  } catch (err) {
+    Alert.alert("Erro interno!", err.message);
+  } finally {
+    yield put(setForm({ saving: false }));
+  }
+}
+
+export function* saveTracking({ operation }) {
+  const { user, challenge, dailyAmount } = yield select((state) => state.app);
+
+  yield put(setForm({ loading: true }));
+
+  try {
+    const { data: res } = yield call(api.post, `/challenge/tracking`, {
+      userId: user?._id,
+      challengeId: challenge?._id,
+      operation,
+      amount: dailyAmount?.toFixed(2),
+    });
+
+    if (res.error) {
+      Alert.alert("Ops!", res.message, [
+        {
+          text: "Tentar novamente",
+          onPress: () => {},
+        },
+      ]);
+      return false;
+    }
+
+    yield put(getHomeAction());
+  } catch (err) {
+    Alert.alert("Erro interno!", err.message);
+  } finally {
+    yield put(setForm({ loading: false }));
+  }
+}
+
+export function* getHanking() {
+  const { challenge } = yield select((state) => state.app);
+
+  yield put(setForm({ loading: true }));
+
+  try {
+    const { data: res } = yield call(
+      api.get,
+      `/challenge/${challenge?._id}/ranking`
+    );
+
+    if (res.error) {
+      Alert.alert("Ops!", res.message, [
+        {
+          text: "Tentar novamente",
+          onPress: () => {},
+        },
+      ]);
+      return false;
+    }
+
+    yield put(setReducer("ranking", res));
+  } catch (err) {
+    Alert.alert("Erro interno!", err.message);
+  } finally {
+    yield put(setForm({ loading: false }));
+  }
+}
+
+export function* getBalance() {
+  const { user } = yield select((state) => state.app);
+
+  yield put(setForm({ loading: true }));
+
+  try {
+    const { data: res } = yield call(api.get, `/user/${user?._id}/balance`);
+
+    if (res.error) {
+      Alert.alert("Ops!", res.message, [
+        {
+          text: "Tentar novamente",
+          onPress: () => {},
+        },
+      ]);
+      return false;
+    }
+
+    yield put(setReducer("trackings", res));
+  } catch (err) {
+    Alert.alert("Erro interno!", err.message);
+  } finally {
+    yield put(setForm({ loading: false }));
+  }
+}
+
 export default all([
   takeLatest(types.SAVE_USERS, saveUser),
   takeLatest(types.LOGIN_USERS, loginUser),
   takeLatest(types.GET_HOME, getHome),
+  takeLatest(types.JOIN_CHALLENGE, joinChallenge),
+  takeLatest(types.GET_RANKING, getHanking),
+  takeLatest(types.GET_BALANCE, getBalance),
 ]);

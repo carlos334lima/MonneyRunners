@@ -24,6 +24,10 @@ export function getHome() {
   return { type: types.GET_HOME };
 }
 
+export function joinChallenge() {
+  return { type: types.JOIN_CHALLENGE }
+}
+
 export function reset(key) {
   return { type: types.SET_USERS, key };
 }

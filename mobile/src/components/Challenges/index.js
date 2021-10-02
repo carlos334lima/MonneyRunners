@@ -3,6 +3,9 @@ import React from "react";
 //@libraries
 import YoutubePlayer from "react-native-youtube-iframe";
 
+//@utils
+import { navigate } from '../../Utils/navigation'
+
 //@styles
 import { Button, Spacer, Text, Title, Box } from "..";
 

@@ -8,6 +8,11 @@ const types = {
 
   GET_HOME: "@app/GET_HOME",
 
+  JOIN_CHALLENGE: "@app/JOIN_CHALLENGE",
+  SAVE_TRACKING: "@app/SAVE_TRACKING",
+  GET_RANKING: "@app/GET_RANKING",
+  GET_BALANCE: "@app/GET_BALANCE",
+
   RESET: "@app/RESET",
 };
 
