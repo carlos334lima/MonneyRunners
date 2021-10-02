@@ -6,23 +6,27 @@ import YoutubePlayer from "react-native-youtube-iframe";
 //@styles
 import { Button, Spacer, Text, Title, Box } from "..";
 
-const Challenges = () => {
+const Challenges = (props) => {
+  const { challenge } = props;
+
   return (
     <>
       <Box hasPadding background="dark50" radius="30" align="center">
         <Title small color="light" bold>
           <Spacer size="2px" />
-          Correr 2km todos os dias ás 5am durante 30 dias
+          {challenge?.title}
         </Title>
         <Spacer />
-        <Text>
-          Matenha a consistência correndo todos os dias para criar hábitos. O
-          desafio termina em 30/09/2021
-        </Text>
+        <Text>{challenge?.description}</Text>
         <Spacer size="20px" />
-        <Button block background="success">
-          {" "}
-          Participar Agora!
+        <Button
+          block
+          background="success"
+          onPress={() => {
+            navigate("Payment");
+          }}
+        >
+          Participar Agora
         </Button>
       </Box>
 
@@ -33,7 +37,11 @@ const Challenges = () => {
           Eai ?! vai encarar o desafio? 😎
         </Title>
         <Spacer />
-        <YoutubePlayer height={180} width="100%" videoId="8UaguGuEQWg" />
+        <YoutubePlayer
+          height={180}
+          width="100%"
+          videoId={challenge?.ytVideoId}
+        />
       </Box>
     </>
   );
