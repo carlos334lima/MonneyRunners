@@ -1,11 +1,15 @@
 {
   "expo": {
-    "name": "mobile",
-    "slug": "mobile",
+    "name": "Money Runners",
+    "slug": "money-runners",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "android": {
+      "package": "app.moneyrunners.appDev"
+    },
+    "description": ""
   },
-  "name": "mobile"
+  "name": "Money Runners"
 }
