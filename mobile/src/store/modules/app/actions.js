@@ -25,7 +25,19 @@ export function getHome() {
 }
 
 export function joinChallenge() {
-  return { type: types.JOIN_CHALLENGE }
+  return { type: types.JOIN_CHALLENGE };
+}
+
+export function saveTracking(operation) {
+  return { type: types.SAVE_TRACKING, operation };
+}
+
+export function getRanking() {
+  return { type: types.GET_RANKING };
+}
+
+export function getBalance() {
+  return { type: types.GET_BALANCE };
 }
 
 export function reset(key) {

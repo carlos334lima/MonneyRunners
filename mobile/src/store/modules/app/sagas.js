@@ -248,6 +248,8 @@ export function* getBalance() {
   try {
     const { data: res } = yield call(api.get, `/user/${user?._id}/balance`);
 
+    console.log('data',res)
+
     if (res.error) {
       Alert.alert("Ops!", res.message, [
         {

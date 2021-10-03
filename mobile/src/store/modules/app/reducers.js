@@ -7,6 +7,7 @@ const INITIAL_STATE = {
   user: {},
   userForm: {},
   payment: {},
+  trackings: [],
   form: {
     loading: false,
     disabled: false,

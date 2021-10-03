@@ -1,7 +1,9 @@
-import React, { useEffect } from "react";
-import { View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { FlatList, View } from "react-native-gesture-handler";
 
 //@libraries
+import moment from "moment";
+import "moment/locale/pt-br";
 import { useDispatch, useSelector } from "react-redux";
 import YoutubePlayer from "../../components/Challenges";
 
@@ -24,21 +26,25 @@ import {
 
 //@components
 import Load from "../../components/Load";
+import Challenges from "../../components/Challenges";
 import NoChallenges from "../../components/NoChallenges";
 
 //@utils
 import { getHome } from "../../store/modules/app/actions";
-import { colors } from "../../styles/theme.json";
-import Challenges from "../../components/Challenges";
 import Utils from "../../Utils";
+import {
+  startInterval,
+  stopInterval,
+  updateTrackingTime,
+} from "../../services/tracking/time";
+
+//@styles
+import { colors } from "../../styles/theme.json";
 
 const Home = () => {
+  moment.locale("pt-br");
+
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getHome());
-  }, []);
-
   const {
     user,
     isParticipant,
@@ -52,6 +58,35 @@ const Home = () => {
     discipline,
     dailyResults,
   } = useSelector((state) => state.app);
+
+  const [timeToChallenge, setTimeToChallenge] = useState("");
+
+  const todayChallengeDateTime = moment(challenge?.time.start, "HH:mm");
+  const nextChallengeDate = moment().isAfter(todayChallengeDateTime)
+    ? moment().add(1, "day")
+    : moment();
+
+  useEffect(() => {
+    dispatch(getHome());
+  }, []);
+
+  useEffect(() => {
+    const intervalId = startInterval(updateTrackingTime, 1 * 1000);
+    return () => {
+      stopInterval(intervalId);
+    };
+  }, [challenge, isParticipant]);
+
+  useEffect(() => {
+    setTimeToChallenge(
+      moment.duration(nextChallengeDate.diff(moment())).humanize()
+    );
+
+    // ENVIANDO NO ÚLTIMO SEGUNDO
+    if (tracking?.countdown === "00:01" && tracking?.isTime) {
+      dispatch(saveTracking("L"));
+    }
+  }, [tracking?.countdown]);
 
   return (
     <ScrollView background="dark">
@@ -72,24 +107,32 @@ const Home = () => {
             />
           </Box>
           <Spacer size="30px" />
-          <Title color="light">{isParticipant ? `${(discipline * 100).toFixed(2)}% de disciplina` : user?.name}</Title>
+          <Title color="light">
+            {isParticipant
+              ? `${(discipline * 100).toFixed(2)}% de disciplina`
+              : user?.name}
+          </Title>
           <Spacer />
-          <Text>{isParticipant ? `${participatedTimes}/${challengePeriod} dias concluídos` : user?.email}</Text>
+          <Text>
+            {isParticipant
+              ? `${participatedTimes}/${challengePeriod} dias concluídos`
+              : user?.email}
+          </Text>
 
-         {isParticipant && (
+          {isParticipant && (
             <Touchable
-            radius="3px"
-            spacing="20px 0 0"
-            hasPadding
-            background="success"
-          >
-            <Text color="primary" bold>
-              Saldo conquistado:
-            </Text>
-            <Spacer size="20px" />
-            <Title color="light"> R$ {balance && balance.toFixed(2)}</Title>
-          </Touchable>
-         )}
+              radius="3px"
+              spacing="20px 0 0"
+              hasPadding
+              background="success"
+            >
+              <Text color="primary" bold>
+                Saldo conquistado:
+              </Text>
+              <Spacer size="20px" />
+              <Title color="light"> R$ {balance && balance.toFixed(2)}</Title>
+            </Touchable>
+          )}
         </Box>
         <Spacer size="30px" />
       </GradientView>
@@ -101,7 +144,9 @@ const Home = () => {
         {!form.loading && !challenge && <NoChallenges />}
 
         {/* Yes Challenge */}
-        {!form.loading && !isParticipant && challenge && <Challenges challenge={challenge}/>}
+        {!form.loading && !isParticipant && challenge && (
+          <Challenges challenge={challenge} />
+        )}
 
         {/* Today's Results */}
         {isParticipant &&
@@ -109,7 +154,7 @@ const Home = () => {
           challenge &&
           !tracking?.isTime(
             <Box hasPadding background="dark50" radius="30" align="center">
-              <Text>Quarta-feira, 28/09/2021</Text>
+              <Text>{moment().format("dddd[, ] DD/MM/YYYY")}</Text>
               <Spacer size="20px" />
               <Title small color="light" bold>
                 Resultados de hoje
@@ -127,11 +172,15 @@ const Home = () => {
                     <Text align="center" color="light">
                       O desafio começa em{" "}
                       <Text color="danger" bold>
-                        algumas horas...
+                        {timeToChallenge}
                       </Text>
                     </Text>
                     <Spacer size="20px" />
-                    <Button block background="success">
+                    <Button
+                      block
+                      background="success"
+                      onPress={() => dispatch(getHome())}
+                    >
                       {" "}
                       Recarregar
                     </Button>
@@ -140,7 +189,7 @@ const Home = () => {
                 renderItem={({ item }) => (
                   <Box row height="50px">
                     <Box row align="center" width="70%">
-                    <Cover
+                      <Cover
                         width="35px"
                         height="35px"
                         circle
@@ -149,11 +198,13 @@ const Home = () => {
                       />
                       <Text color="light" bold>
                         {" "}
-                        Carlos Lima
+                        {item?.userId?.name}
                       </Text>
                     </Box>
 
-                    <Badge>+ R$ 50</Badge>
+                    <Badge>
+                      {item?.operation === "L" ? "-" : "+"} R$ {item?.amount}
+                    </Badge>
                   </Box>
                 )}
               />
@@ -167,20 +218,26 @@ const Home = () => {
           tracking?.isTime(
             <Box hasPadding background="dark50" radius="30" align="center">
               <Badge big color="success" align="center">
-                + R$ 50
+                + R$ {dailyAmount?.toFixed(2)}
               </Badge>
               <Spacer size="25px" />
-              <Text>Quarta-feira, 28/09/2021</Text>
+              <Text>{moment().format("dddd[, ] DD/MM/YYYY")}</Text>
               <Spacer size="20px" />
               <Title small color="light" bold>
                 Inicie seu compromisso
               </Title>
               <Spacer size="30px" />
               <Title big color="danger" bold scale={1.3}>
-                30:00
+                {tracking?.countdown}
               </Title>
               <Spacer size="20px" />
-              <Button block background="danger">
+              <Button
+                block
+                background="danger"
+                onPress={() => {
+                  navigate("Timer");
+                }}
+              >
                 {" "}
                 Iniciar Agora
               </Button>

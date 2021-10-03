@@ -1,51 +1,109 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FlatList } from "react-native";
 
+//@libraries
+import { useSelector, useDispatch } from "react-redux";
+
+//@utils
+import { getBalance } from "../../store/modules/app/actions";
+
 //@styles
-import { Box, Title, Spacer, Text, Button, Badge } from "../../components";
+import {
+  Box,
+  Title,
+  Spacer,
+  Text,
+  Button,
+  Badge,
+  ActivityIndicator,
+} from "../../components";
+import { colors } from "../../styles/theme.json";
+import { View } from "react-native";
 
 const Balance = () => {
+  const dispatch = useDispatch();
+  const { trackings, form } = useSelector((state) => state.app);
+
+  const operationDict = {
+    W: "Saque Integral",
+    G: "Meta Concluida",
+    L: "Meta Incompleta",
+    F: "Depósito Iniciak",
+  };
+
+  useEffect(() => {
+    console.log("trackings", trackings);
+
+    dispatch(getBalance());
+  }, []);
+
   return (
     <Box background="dark" hasPadding>
-      <Spacer size="50px" />
-      <Text>Seu saldo disponível </Text>
-      <Spacer />
-      <Title big color="light">
-        R$ 50.00
-      </Title>
-      <Spacer size="50px" />
-      <Button block> Sacar saldo </Button>
-      <Spacer size="50px" />
-      <FlatList
-        style={{
-          width: "100%",
-          height: 300,
-        }}
-        showsVerticalScrollIndicator={false}
-        data={[1, 2, 3, 4, 5, 6, 8]}
-        keyExtractor={(item) => item.toString() + new Date().getTime()}
-        renderItem={({ item, index }) => (
-          <Box
-            row
-            width="100%"
-            height="50px"
-            align="center"
-            spacing="0 0 5px 0"
-            justify="space-between"
-          >
-            <Box row align="center" width="50%">
-              <Box>
-                <Text color="light" bold opacity={1} spacing="0px 0px 5px 0">
-                  Saque integral
-                </Text>
-                <Spacer size="3px" />
-                <Text small>28/07/2021 ás 22:00</Text>
-              </Box>
-            </Box>
-            <Badge>+ R$ 50</Badge>
+      {form?.loading && (
+        <Box spacing="150px 0 0 0" hasPadding align="center">
+          <ActivityIndicator size="large" />
+          <Spacer size="20px" />
+          <Title color="light" small>
+            Buscando informações
+          </Title>
+          <Spacer size="10px" />
+          <Text>Aguarde alguns instantes...</Text>
+        </Box>
+      )}
+
+      {!form?.loading && (
+        <>
+          <Spacer size="50px" />
+          <Box height="120px">
+            <Text>Seu Saldo Disponível</Text>
+            <Spacer />
+            <Title big color="light">
+              R$ {trackings?.balance?.toFixed(2)}
+            </Title>
           </Box>
-        )}
-      />
+          <Button block background="info">
+            Sacar Saldo
+          </Button>
+          <Spacer size="20px" />
+          <FlatList
+            style={{
+              width: "100%",
+            }}
+            data={trackings?.records}
+            keyExtractor={(item) => item?._id}
+            renderItem={({ item, index }) => (
+              <Box
+                row
+                width="100%"
+                height="50px"
+                align="center"
+                spacing="0 0 5px 0"
+                justify="space-between"
+              >
+                <Box row align="center">
+                  <Box>
+                    <Text color="light">{operationDict[item?.operation]}</Text>
+                    <Spacer size="2px" />
+                    <Text small>
+                      {moment(item?.register).format("DD/MM/YYYY")}
+                    </Text>
+                  </Box>
+                </Box>
+
+                <Badge
+                  color={
+                    ["W", "L"].includes(item?.operation) ? "danger" : "success"
+                  }
+                  spacing="7px 0 0"
+                >
+                  {["W", "L"].includes(item?.operation) ? "-" : "+"} R${" "}
+                  {item?.amount}
+                </Badge>
+              </Box>
+            )}
+          />
+        </>
+      )}
     </Box>
   );
 };
